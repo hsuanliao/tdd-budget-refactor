@@ -45,18 +45,20 @@ namespace BudgetApp
                         if (IsSameMonth(currentDate, startDate))
                         {
                             effectiveDayCount = EffectiveDayCount(startDate, currentBudget.LastDay());
-                            totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                         }
                         else if (IsSameMonth(currentDate, endDate))
                         {
                             effectiveDayCount = EffectiveDayCount(currentBudget.FirstDay(), endDate);
-                            totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                         }
                         else
                         {
                             effectiveDayCount = EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
-                            totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                         }
+
+                        totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
 
                     currentDate = currentDate.AddMonths(1);
