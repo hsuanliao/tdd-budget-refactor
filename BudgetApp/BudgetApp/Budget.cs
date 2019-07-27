@@ -7,34 +7,34 @@ namespace BudgetApp
         public string YearMonth { get; set; }
         public int Amount { get; set; }
 
-        public decimal DailyAmount()
+        public decimal OverlappingAmount(Period period)
+        {
+            return DailyAmount() * period.OverlappingDayCount(GetPeriod());
+        }
+
+        private decimal DailyAmount()
         {
             return Amount / (decimal) Days();
         }
 
-        public int Days()
+        private int Days()
         {
             return DateTime.DaysInMonth(FirstDay().Year, FirstDay().Month);
         }
 
-        public DateTime LastDay()
-        {
-            return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
-        }
-
-        public DateTime FirstDay()
+        private DateTime FirstDay()
         {
             return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
         }
 
-        public Period GetPeriod()
+        private Period GetPeriod()
         {
             return new Period(FirstDay(), LastDay());
         }
 
-        public decimal OverlappingAmount(Period period)
+        private DateTime LastDay()
         {
-            return DailyAmount() * period.OverlappingDayCount(GetPeriod());
+            return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
         }
     }
 }
