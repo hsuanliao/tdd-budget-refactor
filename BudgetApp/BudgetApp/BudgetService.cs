@@ -28,7 +28,7 @@ namespace BudgetApp
                 var budget = budgets.FirstOrDefault(x => x.YearMonth == currentMonth);
                 if (budget != null)
                 {
-                    return budget.DailyAmount() * EffectiveDayCount(startDate, endDate);
+                    return budget.DailyAmount() * DayCount(startDate, endDate);
                 }
             }
             else
@@ -59,7 +59,7 @@ namespace BudgetApp
                             effectiveEnd = currentBudget.LastDay();
                         }
 
-                        var effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
+                        var effectiveDayCount = DayCount(effectiveStart, effectiveEnd);
 
                         totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
@@ -71,7 +71,7 @@ namespace BudgetApp
             return totalAmount;
         }
 
-        private static int EffectiveDayCount(DateTime startDate, DateTime end)
+        private static int DayCount(DateTime startDate, DateTime end)
         {
             return ((end - startDate).Days + 1);
         }
