@@ -38,10 +38,9 @@ namespace BudgetApp
 
                 while (currentDate < allEndMonth)
                 {
+                    var currentBudget = FindBudget(currentDate, budgets);
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var currentBudget = FindBudget(currentDate, budgets);
-
                         if (currentBudget != null)
                         {
                             totalAmount += currentBudget.DailyAmount() *
@@ -50,7 +49,7 @@ namespace BudgetApp
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var currentBudget = FindBudget(currentDate, budgets);
+                        //var currentBudget = FindBudget(currentDate, budgets);
 
                         if (currentBudget != null)
                         {
@@ -60,7 +59,7 @@ namespace BudgetApp
                     }
                     else
                     {
-                        var currentBudget = FindBudget(currentDate, budgets);
+                        //var currentBudget = FindBudget(currentDate, budgets);
 
                         if (currentBudget != null)
                         {
