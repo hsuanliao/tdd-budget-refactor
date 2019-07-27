@@ -30,20 +30,22 @@ namespace BudgetApp
             }
             else
             {
-                var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
+                var firstMonth = startDate.ToString("yyyyMM");
+                var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
 
                 var firstMonthAmount = firstMonthBudget == null
                     ? 0
                     : firstMonthBudget.DailyAmount() * EffectiveDayCount(startDate, firstMonthBudget.LastDay());
 
-                var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM"));
+                var lastMonth = endDate.ToString("yyyyMM");
+                var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == lastMonth);
 
                 var lastMonthAmount = lastMonthBudget == null
                     ? 0
                     : lastMonthBudget.DailyAmount() * EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
-                //: lastMonthBudget.DailyAmount() * (endDate.Day);
 
                 var totalAmount = firstMonthAmount + lastMonthAmount;
+
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
@@ -51,8 +53,15 @@ namespace BudgetApp
                 while (allEndMonth > allStartMonth)
                 {
                     currentMonth = allStartMonth.ToString("yyyyMM");
-                    if (budgets.Any(x => x.YearMonth == currentMonth))
-                        totalAmount += budgets.FirstOrDefault(x => x.YearMonth == currentMonth).Amount;
+                    var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentMonth);
+
+                    var currentBudgetAmount = currentBudget == null
+                        ? 0
+                        : currentBudget.DailyAmount() *
+                        EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
+                    //: currentBudget.Amount;
+
+                    totalAmount += currentBudgetAmount;
 
                     allStartMonth = allStartMonth.AddMonths(1);
                 }

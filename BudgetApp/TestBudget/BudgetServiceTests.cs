@@ -29,6 +29,17 @@ namespace TestBudget
         }
 
         [TestMethod]
+        public void middle_without_budget()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "201901", Amount = 31000},
+                new Budget {YearMonth = "201903", Amount = 31000}
+            );
+            decimal actual = _budgetService.Query(new DateTime(2019, 1, 1), new DateTime(2019, 3, 5));
+            Assert.AreEqual(36000, actual);
+        }
+
+        [TestMethod]
         public void start_without_budget()
         {
             GivenBudgets(
