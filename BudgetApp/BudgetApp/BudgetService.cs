@@ -26,8 +26,7 @@ namespace BudgetApp
 
             foreach (var currentBudget in budgets)
             {
-                totalAmount += currentBudget.DailyAmount() *
-                    period.OverlappingDayCount(currentBudget.GetPeriod());
+                totalAmount += OverlappingAmount(currentBudget, period);
             }
 
             return totalAmount;
@@ -49,6 +48,11 @@ namespace BudgetApp
         private static bool IsSameMonth(DateTime startDate, DateTime endDate)
         {
             return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
+        }
+
+        private static decimal OverlappingAmount(Budget currentBudget, Period period)
+        {
+            return currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget.GetPeriod());
         }
 
         private static decimal QuerySingleMonth(DateTime startDate, DateTime endDate, List<Budget> budgets)
