@@ -21,9 +21,12 @@ namespace BudgetApp
                 return 0;
             }
 
-            if (startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM"))
+            if (IsSameMonth(startDate, endDate))
             {
-                return QuerySingleMonth(startDate, endDate, budgets);
+                var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
+                if (budget == null) return 0;
+
+                return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
             }
             else
             {
@@ -48,6 +51,11 @@ namespace BudgetApp
 
                 return totalAmount;
             }
+        }
+
+        private static bool IsSameMonth(DateTime startDate, DateTime endDate)
+        {
+            return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
         }
 
         private static decimal QuerySingleMonth(DateTime startDate, DateTime endDate, List<Budget> budgets)
