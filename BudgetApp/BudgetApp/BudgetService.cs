@@ -41,25 +41,7 @@ namespace BudgetApp
                     var currentBudget = FindBudget(currentDate, budgets);
                     if (currentBudget != null)
                     {
-                        DateTime effectiveStart;
-                        DateTime effectiveEnd;
-                        if (currentBudget.YearMonth == startDate.ToString("yyyyMM"))
-                        {
-                            effectiveStart = startDate;
-                            effectiveEnd = currentBudget.LastDay();
-                        }
-                        else if (currentBudget.YearMonth == endDate.ToString("yyyyMM"))
-                        {
-                            effectiveStart = currentBudget.FirstDay();
-                            effectiveEnd = endDate;
-                        }
-                        else
-                        {
-                            effectiveStart = currentBudget.FirstDay();
-                            effectiveEnd = currentBudget.LastDay();
-                        }
-
-                        var effectiveDayCount = DayCount(effectiveStart, effectiveEnd);
+                        var effectiveDayCount = OverlappingDaycount(startDate, endDate, currentBudget);
 
                         totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
@@ -92,6 +74,30 @@ namespace BudgetApp
         private static bool IsSameMonth(DateTime startDate, DateTime endDate)
         {
             return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
+        }
+
+        private static int OverlappingDaycount(DateTime startDate, DateTime endDate, Budget currentBudget)
+        {
+            DateTime effectiveStart;
+            DateTime effectiveEnd;
+            if (currentBudget.YearMonth == startDate.ToString("yyyyMM"))
+            {
+                effectiveStart = startDate;
+                effectiveEnd = currentBudget.LastDay();
+            }
+            else if (currentBudget.YearMonth == endDate.ToString("yyyyMM"))
+            {
+                effectiveStart = currentBudget.FirstDay();
+                effectiveEnd = endDate;
+            }
+            else
+            {
+                effectiveStart = currentBudget.FirstDay();
+                effectiveEnd = currentBudget.LastDay();
+            }
+
+            var effectiveDayCount = DayCount(effectiveStart, effectiveEnd);
+            return effectiveDayCount;
         }
 
         private static decimal QuerySingleMonth(DateTime startDate, DateTime endDate, List<Budget> budgets)
