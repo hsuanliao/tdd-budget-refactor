@@ -55,7 +55,8 @@ namespace BudgetApp
             var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
             if (budget == null) return 0;
 
-            var daysInMonth = DateTime.DaysInMonth(startDate.Year, startDate.Month);
+            var daysInMonth = budget.Days();
+            //var daysInMonth = DateTime.DaysInMonth(startDate.Year, startDate.Month);
             return budget.Amount / daysInMonth * (endDate.Day - startDate.Day + 1);
         }
     }
