@@ -26,7 +26,8 @@ namespace BudgetApp
                 var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
                 if (budget == null) return 0;
 
-                return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
+                return budget.DailyAmount() * EffectiveDayCount(startDate, endDate);
+                //return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
             }
             else
             {
