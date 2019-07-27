@@ -13,14 +13,9 @@ namespace BudgetApp
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
 
-        public static int DayCount(DateTime startDate, DateTime end)
-        {
-            return ((end - startDate).Days + 1);
-        }
-
         public int OverlappingDayCount(Period another)
         {
-            if (EndDate < another.StartDate || StartDate > another.EndDate)
+            if (HasNoOverlapping(another))
             {
                 return 0;
             }
@@ -34,6 +29,16 @@ namespace BudgetApp
                 : another.EndDate;
 
             return DayCount(overlappingStart, overlappingEnd);
+        }
+
+        private static int DayCount(DateTime startDate, DateTime end)
+        {
+            return ((end - startDate).Days + 1);
+        }
+
+        private bool HasNoOverlapping(Period another)
+        {
+            return EndDate < another.StartDate || StartDate > another.EndDate;
         }
     }
 }
