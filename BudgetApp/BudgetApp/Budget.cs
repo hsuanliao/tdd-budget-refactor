@@ -31,5 +31,10 @@ namespace BudgetApp
         {
             return new Period(FirstDay(), LastDay());
         }
+
+        public decimal OverlappingAmount(Period period)
+        {
+            return DailyAmount() * period.OverlappingDayCount(GetPeriod());
+        }
     }
 }
