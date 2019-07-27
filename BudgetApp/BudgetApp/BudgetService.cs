@@ -40,7 +40,8 @@ namespace BudgetApp
 
                 var lastMonthAmount = lastMonthBudget == null
                     ? 0
-                    : lastMonthBudget.DailyAmount() * (endDate.Day);
+                    : lastMonthBudget.DailyAmount() * EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
+                //: lastMonthBudget.DailyAmount() * (endDate.Day);
 
                 var totalAmount = firstMonthAmount + lastMonthAmount;
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);

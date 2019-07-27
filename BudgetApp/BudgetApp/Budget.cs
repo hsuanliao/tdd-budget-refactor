@@ -22,7 +22,7 @@ namespace BudgetApp
             return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
         }
 
-        private DateTime FirstDay()
+        public DateTime FirstDay()
         {
             return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
         }
