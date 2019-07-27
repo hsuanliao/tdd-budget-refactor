@@ -24,8 +24,7 @@ namespace BudgetApp
             decimal totalAmount = 0;
             if (IsSameMonth(startDate, endDate))
             {
-                var currentMonth = startDate.ToString("yyyyMM");
-                var budget = budgets.FirstOrDefault(x => x.YearMonth == currentMonth);
+                var budget = FindBudget(startDate, budgets);
                 if (budget != null)
                 {
                     return budget.DailyAmount() * Period.DayCount(startDate, endDate);
