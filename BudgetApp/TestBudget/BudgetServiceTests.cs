@@ -40,6 +40,16 @@ namespace TestBudget
         }
 
         [TestMethod]
+        public void period_without_overlapping_before_budget()
+        {
+            GivenBudgets(
+                new Budget {YearMonth = "201903", Amount = 31000}
+            );
+            decimal actual = _budgetService.Query(new DateTime(2019, 1, 1), new DateTime(2019, 2, 5));
+            Assert.AreEqual(0, actual);
+        }
+
+        [TestMethod]
         public void start_without_budget()
         {
             GivenBudgets(
