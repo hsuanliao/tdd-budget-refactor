@@ -21,8 +21,9 @@ namespace BudgetApp
                 return 0;
             }
 
-            decimal totalAmount = 0;
             var period = new Period(startDate, endDate);
+            return budgets.Sum(b => b.OverlappingAmount(period));
+            decimal totalAmount = 0;
 
             foreach (var currentBudget in budgets)
             {
