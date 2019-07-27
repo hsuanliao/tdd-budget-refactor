@@ -33,46 +33,29 @@ namespace BudgetApp
             }
             else
             {
-                //var firstMonthBudget = FindBudget(startDate, budgets);
-
-                //if (firstMonthBudget != null)
-                //{
-                //    totalAmount += firstMonthBudget.DailyAmount() *
-                //        EffectiveDayCount(startDate, firstMonthBudget.LastDay());
-                //}
-
-                //var lastMonthBudget = FindBudget(endDate, budgets);
-
-                //if (lastMonthBudget != null)
-                //{
-                //    totalAmount += lastMonthBudget.DailyAmount() *
-                //        EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
-                //}
-
                 var currentDate = startDate;
                 var allEndMonth = endDate.AddMonths(1);
-                //var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
                 while (currentDate < allEndMonth)
                 {
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var firstMonthBudget = FindBudget(startDate, budgets);
+                        var currentBudget = FindBudget(currentDate, budgets);
 
-                        if (firstMonthBudget != null)
+                        if (currentBudget != null)
                         {
-                            totalAmount += firstMonthBudget.DailyAmount() *
-                                EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                            totalAmount += currentBudget.DailyAmount() *
+                                EffectiveDayCount(startDate, currentBudget.LastDay());
                         }
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var lastMonthBudget = FindBudget(endDate, budgets);
+                        var currentBudget = FindBudget(currentDate, budgets);
 
-                        if (lastMonthBudget != null)
+                        if (currentBudget != null)
                         {
-                            totalAmount += lastMonthBudget.DailyAmount() *
-                                EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
+                            totalAmount += currentBudget.DailyAmount() *
+                                EffectiveDayCount(currentBudget.FirstDay(), endDate);
                         }
                     }
                     else
