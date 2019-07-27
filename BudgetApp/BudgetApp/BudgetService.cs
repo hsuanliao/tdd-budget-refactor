@@ -15,48 +15,13 @@ namespace BudgetApp
 
         public decimal Query(DateTime startDate, DateTime endDate)
         {
-            var budgets = this._repo.GetAll();
             if (startDate > endDate)
             {
                 return 0;
             }
 
             var period = new Period(startDate, endDate);
-            return budgets.Sum(b => b.OverlappingAmount(period));
-            decimal totalAmount = 0;
-
-            foreach (var currentBudget in budgets)
-            {
-                totalAmount += currentBudget.OverlappingAmount(period);
-            }
-
-            return totalAmount;
-        }
-
-        private static Budget FindBudget(DateTime startDate, List<Budget> budgets)
-        {
-            var firstMonth = startDate.ToString("yyyyMM");
-            var firstMonthBudget = FindBudget(budgets, firstMonth);
-            return firstMonthBudget;
-        }
-
-        private static Budget FindBudget(List<Budget> budgets, string firstMonth)
-        {
-            var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
-            return firstMonthBudget;
-        }
-
-        private static bool IsSameMonth(DateTime startDate, DateTime endDate)
-        {
-            return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
-        }
-
-        private static decimal QuerySingleMonth(DateTime startDate, DateTime endDate, List<Budget> budgets)
-        {
-            var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
-            if (budget == null) return 0;
-
-            return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
+            return this._repo.GetAll().Sum(b => b.OverlappingAmount(period));
         }
     }
 }
