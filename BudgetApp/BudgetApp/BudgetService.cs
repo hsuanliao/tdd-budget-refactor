@@ -33,13 +33,13 @@ namespace BudgetApp
             }
             else
             {
-                var firstMonthBudget = FindBudget(startDate, budgets);
+                //var firstMonthBudget = FindBudget(startDate, budgets);
 
-                if (firstMonthBudget != null)
-                {
-                    totalAmount += firstMonthBudget.DailyAmount() *
-                        EffectiveDayCount(startDate, firstMonthBudget.LastDay());
-                }
+                //if (firstMonthBudget != null)
+                //{
+                //    totalAmount += firstMonthBudget.DailyAmount() *
+                //        EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                //}
 
                 var lastMonthBudget = FindBudget(endDate, budgets);
 
@@ -49,17 +49,31 @@ namespace BudgetApp
                         EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
                 }
 
-                var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
+                var allStartMonth = startDate;
+                //var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
-                while (allEndMonth > allStartMonth)
+                while (allStartMonth < allEndMonth)
                 {
-                    var currentBudget = FindBudget(allStartMonth, budgets);
-
-                    if (currentBudget != null)
+                    if (allStartMonth == startDate)
                     {
-                        totalAmount += currentBudget.DailyAmount() *
-                            EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
+                        var firstMonthBudget = FindBudget(startDate, budgets);
+
+                        if (firstMonthBudget != null)
+                        {
+                            totalAmount += firstMonthBudget.DailyAmount() *
+                                EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                        }
+                    }
+                    else
+                    {
+                        var currentBudget = FindBudget(allStartMonth, budgets);
+
+                        if (currentBudget != null)
+                        {
+                            totalAmount += currentBudget.DailyAmount() *
+                                EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
+                        }
                     }
 
                     allStartMonth = allStartMonth.AddMonths(1);
