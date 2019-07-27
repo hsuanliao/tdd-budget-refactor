@@ -30,21 +30,26 @@ namespace BudgetApp
             }
             else
             {
-                string searchMonth = "";
-                var firstmonth = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM")).Amount /
-                    DateTime.DaysInMonth(startDate.Year, startDate.Month) *
-                    (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
-                var secondmonth = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM")).Amount /
+                var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
+
+                var firstMonthAmount = firstMonthBudget == null
+                    ? 0
+                    : firstMonthBudget.Amount / DateTime.DaysInMonth(startDate.Year, startDate.Month)
+                    * (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
+
+                var lastMonthAmount = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM")).Amount /
                     DateTime.DaysInMonth(endDate.Year, endDate.Month) * (endDate.Day);
 
-                var totalAmount = firstmonth + secondmonth;
+                var totalAmount = firstMonthAmount + lastMonthAmount;
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
+
+                string currentMonth = "";
                 while (allEndMonth > allStartMonth)
                 {
-                    searchMonth = allStartMonth.ToString("yyyyMM");
-                    if (budgets.Any(x => x.YearMonth == searchMonth))
-                        totalAmount += budgets.FirstOrDefault(x => x.YearMonth == searchMonth).Amount;
+                    currentMonth = allStartMonth.ToString("yyyyMM");
+                    if (budgets.Any(x => x.YearMonth == currentMonth))
+                        totalAmount += budgets.FirstOrDefault(x => x.YearMonth == currentMonth).Amount;
 
                     allStartMonth = allStartMonth.AddMonths(1);
                 }
