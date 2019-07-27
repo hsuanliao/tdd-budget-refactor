@@ -49,13 +49,12 @@ namespace BudgetApp
                         EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
                 }
 
-                var allStartMonth = startDate;
-                //var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
+                var currentDate = startDate;
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
-                while (allStartMonth < allEndMonth)
+                while (currentDate < allEndMonth)
                 {
-                    if (allStartMonth == startDate)
+                    if (IsSameMonth(currentDate, startDate))
                     {
                         var firstMonthBudget = FindBudget(startDate, budgets);
 
@@ -67,7 +66,7 @@ namespace BudgetApp
                     }
                     else
                     {
-                        var currentBudget = FindBudget(allStartMonth, budgets);
+                        var currentBudget = FindBudget(currentDate, budgets);
 
                         if (currentBudget != null)
                         {
@@ -76,7 +75,7 @@ namespace BudgetApp
                         }
                     }
 
-                    allStartMonth = allStartMonth.AddMonths(1);
+                    currentDate = currentDate.AddMonths(1);
                 }
             }
 
