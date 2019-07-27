@@ -18,17 +18,17 @@ namespace BudgetApp
             return ((end - startDate).Days + 1);
         }
 
-        public int OverlappingDayCount(Budget currentBudget)
+        public int OverlappingDayCount(Budget budget)
         {
-            var effectiveStart = StartDate > currentBudget.FirstDay()
+            var overlappingStart = StartDate > budget.FirstDay()
                 ? StartDate
-                : currentBudget.FirstDay();
+                : budget.FirstDay();
 
-            var effectiveEnd = EndDate < currentBudget.LastDay()
+            var overlappingEnd = EndDate < budget.LastDay()
                 ? EndDate
-                : currentBudget.LastDay();
+                : budget.LastDay();
 
-            return DayCount(effectiveStart, effectiveEnd);
+            return DayCount(overlappingStart, overlappingEnd);
         }
     }
 }
