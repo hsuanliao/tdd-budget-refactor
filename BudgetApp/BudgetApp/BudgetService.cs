@@ -43,7 +43,7 @@ namespace BudgetApp
                     {
                         DateTime effectiveStart;
                         DateTime effectiveEnd;
-                        if (currentDate.ToString("yyyyMM") == startDate.ToString("yyyyMM"))
+                        if (currentBudget.YearMonth == startDate.ToString("yyyyMM"))
                         {
                             effectiveStart = startDate;
                             effectiveEnd = currentBudget.LastDay();
