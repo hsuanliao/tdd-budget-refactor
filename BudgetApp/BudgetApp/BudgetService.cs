@@ -52,16 +52,11 @@ namespace BudgetApp
 
         private static decimal QuerySingleMonth(DateTime startDate, DateTime endDate, List<Budget> budgets)
         {
-            var searchMonth = startDate.ToString("yyyyMM");
+            var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
+            if (budget == null) return 0;
 
-            var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
-            if (budget != null)
-            {
-                return budget.Amount /
-                    DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
-            }
-
-            return 0;
+            return budget.Amount /
+                DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
         }
     }
 }
