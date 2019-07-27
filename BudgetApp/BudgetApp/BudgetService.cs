@@ -58,18 +58,19 @@ namespace BudgetApp
                 return 0;
             }
 
+            var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
             if (endDate.Day == DateTime.DaysInMonth(startDate.Year, startDate.Month) && startDate.Day == 1)
             {
-                return budgets.FirstOrDefault(x => x.YearMonth == searchMonth).Amount;
+                return budget.Amount;
             }
             else if (startDate.Day == endDate.Day)
             {
-                return budgets.FirstOrDefault(x => x.YearMonth == searchMonth).Amount /
+                return budget.Amount /
                     DateTime.DaysInMonth(startDate.Year, startDate.Month);
             }
             else
             {
-                return budgets.FirstOrDefault(x => x.YearMonth == searchMonth).Amount /
+                return budget.Amount /
                     DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
             }
         }
