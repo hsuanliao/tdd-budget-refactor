@@ -43,7 +43,7 @@ namespace BudgetApp
                     {
                         DateTime effectiveStart;
                         DateTime effectiveEnd;
-                        if (IsSameMonth(currentDate, startDate))
+                        if (currentDate.ToString("yyyyMM") == startDate.ToString("yyyyMM"))
                         {
                             effectiveStart = startDate;
                             effectiveEnd = currentBudget.LastDay();
@@ -62,7 +62,9 @@ namespace BudgetApp
                             //effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
                         }
 
-                        totalAmount += currentBudget.DailyAmount() * EffectiveDayCount(effectiveStart, effectiveEnd);
+                        var effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
+
+                        totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
 
                     currentDate = currentDate.AddMonths(1);
