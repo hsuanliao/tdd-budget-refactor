@@ -41,24 +41,28 @@ namespace BudgetApp
                     var currentBudget = FindBudget(currentDate, budgets);
                     if (currentBudget != null)
                     {
-                        int effectiveDayCount;
+                        DateTime effectiveStart;
+                        DateTime effectiveEnd;
                         if (IsSameMonth(currentDate, startDate))
                         {
-                            effectiveDayCount = EffectiveDayCount(startDate, currentBudget.LastDay());
-                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            effectiveStart = startDate;
+                            effectiveEnd = currentBudget.LastDay();
+                            //effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
                         }
                         else if (IsSameMonth(currentDate, endDate))
                         {
-                            effectiveDayCount = EffectiveDayCount(currentBudget.FirstDay(), endDate);
-                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            effectiveStart = currentBudget.FirstDay();
+                            effectiveEnd = endDate;
+                            //effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
                         }
                         else
                         {
-                            effectiveDayCount = EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
-                            //totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                            effectiveStart = currentBudget.FirstDay();
+                            effectiveEnd = currentBudget.LastDay();
+                            //effectiveDayCount = EffectiveDayCount(effectiveStart, effectiveEnd);
                         }
 
-                        totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                        totalAmount += currentBudget.DailyAmount() * EffectiveDayCount(effectiveStart, effectiveEnd);
                     }
 
                     currentDate = currentDate.AddMonths(1);
