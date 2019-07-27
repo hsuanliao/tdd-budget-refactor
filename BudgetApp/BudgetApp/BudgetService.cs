@@ -27,10 +27,15 @@ namespace BudgetApp
             foreach (var currentBudget in budgets)
             {
                 totalAmount += currentBudget.DailyAmount() *
-                    period.OverlappingDayCount(new Period(currentBudget.FirstDay(), currentBudget.LastDay()));
+                    period.OverlappingDayCount(GetPeriod(currentBudget));
             }
 
             return totalAmount;
+        }
+
+        private static Period GetPeriod(Budget currentBudget)
+        {
+            return new Period(currentBudget.FirstDay(), currentBudget.LastDay());
         }
 
         private static Budget FindBudget(DateTime startDate, List<Budget> budgets)
