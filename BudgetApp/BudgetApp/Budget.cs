@@ -26,5 +26,10 @@ namespace BudgetApp
         {
             return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
         }
+
+        public Period GetPeriod()
+        {
+            return new Period(FirstDay(), LastDay());
+        }
     }
 }
