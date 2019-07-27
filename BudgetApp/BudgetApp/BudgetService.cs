@@ -22,32 +22,32 @@ namespace BudgetApp
             }
 
             decimal totalAmount = 0;
-            if (IsSameMonth(startDate, endDate))
+            //if (IsSameMonth(startDate, endDate))
+            //{
+            //    var budget = FindBudget(startDate, budgets);
+            //    if (budget != null)
+            //    {
+            //        return budget.DailyAmount() * Period.DayCount(startDate, endDate);
+            //    }
+            //}
+            //else
+            //{
+            var period = new Period(startDate, endDate);
+
+            var currentDate = startDate;
+            var allEndMonth = endDate.AddMonths(1);
+            while (currentDate < allEndMonth)
             {
-                var budget = FindBudget(startDate, budgets);
-                if (budget != null)
+                var currentBudget = FindBudget(currentDate, budgets);
+
+                if (currentBudget != null)
                 {
-                    return budget.DailyAmount() * Period.DayCount(startDate, endDate);
+                    totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
                 }
+
+                currentDate = currentDate.AddMonths(1);
             }
-            else
-            {
-                var currentDate = startDate;
-                var allEndMonth = endDate.AddMonths(1);
-
-                while (currentDate < allEndMonth)
-                {
-                    var currentBudget = FindBudget(currentDate, budgets);
-                    var period = new Period(startDate, endDate);
-
-                    if (currentBudget != null)
-                    {
-                        totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
-                    }
-
-                    currentDate = currentDate.AddMonths(1);
-                }
-            }
+            //}
 
             return totalAmount;
         }
