@@ -35,7 +35,8 @@ namespace BudgetApp
                 var firstMonthAmount = firstMonthBudget == null
                     ? 0
                     : firstMonthBudget.DailyAmount()
-                    * (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
+                    * (firstMonthBudget.Days() - startDate.Day + 1);
+                //* (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
 
                 var lastMonthAmount = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM")).Amount /
                     DateTime.DaysInMonth(endDate.Year, endDate.Month) * (endDate.Day);
