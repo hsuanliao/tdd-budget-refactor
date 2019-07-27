@@ -20,7 +20,7 @@ namespace BudgetApp
 
         public int OverlappingDayCount(Budget budget)
         {
-            if (EndDate < budget.FirstDay())
+            if (EndDate < budget.FirstDay() || StartDate > budget.LastDay())
             {
                 return 0;
             }
