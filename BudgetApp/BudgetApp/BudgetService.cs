@@ -41,16 +41,17 @@ namespace BudgetApp
                 //        EffectiveDayCount(startDate, firstMonthBudget.LastDay());
                 //}
 
-                var lastMonthBudget = FindBudget(endDate, budgets);
+                //var lastMonthBudget = FindBudget(endDate, budgets);
 
-                if (lastMonthBudget != null)
-                {
-                    totalAmount += lastMonthBudget.DailyAmount() *
-                        EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
-                }
+                //if (lastMonthBudget != null)
+                //{
+                //    totalAmount += lastMonthBudget.DailyAmount() *
+                //        EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
+                //}
 
                 var currentDate = startDate;
-                var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
+                var allEndMonth = endDate.AddMonths(1);
+                //var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
                 while (currentDate < allEndMonth)
                 {
@@ -62,6 +63,16 @@ namespace BudgetApp
                         {
                             totalAmount += firstMonthBudget.DailyAmount() *
                                 EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                        }
+                    }
+                    else if (IsSameMonth(currentDate, endDate))
+                    {
+                        var lastMonthBudget = FindBudget(endDate, budgets);
+
+                        if (lastMonthBudget != null)
+                        {
+                            totalAmount += lastMonthBudget.DailyAmount() *
+                                EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
                         }
                     }
                     else
