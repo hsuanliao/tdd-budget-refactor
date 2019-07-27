@@ -29,20 +29,6 @@ namespace BudgetApp
                 totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
             }
 
-            //var currentDate = startDate;
-            //var allEndMonth = endDate.AddMonths(1);
-            //while (currentDate < allEndMonth)
-            //{
-            //    var currentBudget = FindBudget(currentDate, budgets);
-
-            //    if (currentBudget != null)
-            //    {
-            //        totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
-            //    }
-
-            //    currentDate = currentDate.AddMonths(1);
-            //}
-
             return totalAmount;
         }
 
