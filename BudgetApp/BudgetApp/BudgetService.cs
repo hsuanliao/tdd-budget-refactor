@@ -34,8 +34,10 @@ namespace BudgetApp
                 var firstMonth = startDate.ToString("yyyyMM");
                 var firstMonthBudget = FindBudget(budgets, firstMonth);
 
-                var firstMonthAmount = EffectiveAmount(startDate, firstMonthBudget);
-                totalAmount += firstMonthAmount;
+                if (firstMonthBudget != null)
+                {
+                    totalAmount += firstMonthBudget.DailyAmount() * EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                }
 
                 var lastMonth = endDate.ToString("yyyyMM");
                 var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == lastMonth);
@@ -67,14 +69,6 @@ namespace BudgetApp
 
                 return totalAmount;
             }
-        }
-
-        private static decimal EffectiveAmount(DateTime startDate, Budget firstMonthBudget)
-        {
-            var firstMonthAmount = firstMonthBudget == null
-                ? 0
-                : firstMonthBudget.DailyAmount() * EffectiveDayCount(startDate, firstMonthBudget.LastDay());
-            return firstMonthAmount;
         }
 
         private static int EffectiveDayCount(DateTime startDate, DateTime end)
