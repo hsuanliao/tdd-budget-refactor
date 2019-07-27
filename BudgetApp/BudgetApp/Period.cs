@@ -28,24 +28,7 @@ namespace BudgetApp
                 ? EndDate
                 : currentBudget.LastDay();
 
-            if (currentBudget.YearMonth == StartDate.ToString("yyyyMM"))
-            {
-                //effectiveStart = StartDate;
-                //effectiveEnd = currentBudget.LastDay();
-            }
-            else if (currentBudget.YearMonth == EndDate.ToString("yyyyMM"))
-            {
-                //effectiveStart = currentBudget.FirstDay();
-                //effectiveEnd = EndDate;
-            }
-            else
-            {
-                //effectiveStart = currentBudget.FirstDay();
-                //effectiveEnd = currentBudget.LastDay();
-            }
-
-            var effectiveDayCount = DayCount(effectiveStart, effectiveEnd);
-            return effectiveDayCount;
+            return DayCount(effectiveStart, effectiveEnd);
         }
     }
 }
