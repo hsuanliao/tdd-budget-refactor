@@ -22,23 +22,28 @@ namespace BudgetApp
         {
             DateTime effectiveStart;
             DateTime effectiveEnd;
+
+            effectiveStart = StartDate > currentBudget.FirstDay()
+                ? StartDate
+                : currentBudget.FirstDay();
+
             if (currentBudget.YearMonth == StartDate.ToString("yyyyMM"))
             {
-                effectiveStart = StartDate;
+                //effectiveStart = StartDate;
                 effectiveEnd = currentBudget.LastDay();
             }
             else if (currentBudget.YearMonth == EndDate.ToString("yyyyMM"))
             {
-                effectiveStart = currentBudget.FirstDay();
+                //effectiveStart = currentBudget.FirstDay();
                 effectiveEnd = EndDate;
             }
             else
             {
-                effectiveStart = currentBudget.FirstDay();
+                //effectiveStart = currentBudget.FirstDay();
                 effectiveEnd = currentBudget.LastDay();
             }
 
-            var effectiveDayCount = Period.DayCount(effectiveStart, effectiveEnd);
+            var effectiveDayCount = DayCount(effectiveStart, effectiveEnd);
             return effectiveDayCount;
         }
     }
