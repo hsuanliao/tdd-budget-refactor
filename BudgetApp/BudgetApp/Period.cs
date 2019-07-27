@@ -18,10 +18,8 @@ namespace BudgetApp
             return ((end - startDate).Days + 1);
         }
 
-        public int OverlappingDayCount(Budget budget)
+        public int OverlappingDayCount(Period another)
         {
-            var another = new Period(budget.FirstDay(), budget.LastDay());
-
             if (EndDate < another.StartDate || StartDate > another.EndDate)
             {
                 return 0;
