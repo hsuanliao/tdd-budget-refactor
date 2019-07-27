@@ -32,11 +32,9 @@ namespace BudgetApp
             {
                 decimal totalAmount = 0;
                 var firstMonth = startDate.ToString("yyyyMM");
-                var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
+                var firstMonthBudget = FindBudget(budgets, firstMonth);
 
-                var firstMonthAmount = firstMonthBudget == null
-                    ? 0
-                    : firstMonthBudget.DailyAmount() * EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+                var firstMonthAmount = EffectiveAmount(startDate, firstMonthBudget);
                 totalAmount += firstMonthAmount;
 
                 var lastMonth = endDate.ToString("yyyyMM");
@@ -47,7 +45,6 @@ namespace BudgetApp
                     : lastMonthBudget.DailyAmount() * EffectiveDayCount(lastMonthBudget.FirstDay(), endDate);
 
                 totalAmount += lastMonthAmount;
-                //totalAmount = firstMonthAmount + lastMonthAmount;
 
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
@@ -72,9 +69,23 @@ namespace BudgetApp
             }
         }
 
+        private static decimal EffectiveAmount(DateTime startDate, Budget firstMonthBudget)
+        {
+            var firstMonthAmount = firstMonthBudget == null
+                ? 0
+                : firstMonthBudget.DailyAmount() * EffectiveDayCount(startDate, firstMonthBudget.LastDay());
+            return firstMonthAmount;
+        }
+
         private static int EffectiveDayCount(DateTime startDate, DateTime end)
         {
             return ((end - startDate).Days + 1);
+        }
+
+        private static Budget FindBudget(List<Budget> budgets, string firstMonth)
+        {
+            var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
+            return firstMonthBudget;
         }
 
         private static bool IsSameMonth(DateTime startDate, DateTime endDate)
