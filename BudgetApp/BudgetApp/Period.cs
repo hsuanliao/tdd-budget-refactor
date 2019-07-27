@@ -12,5 +12,34 @@ namespace BudgetApp
 
         public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
+
+        public static int DayCount(DateTime startDate, DateTime end)
+        {
+            return ((end - startDate).Days + 1);
+        }
+
+        public int OverlappingDayCount(Budget currentBudget)
+        {
+            DateTime effectiveStart;
+            DateTime effectiveEnd;
+            if (currentBudget.YearMonth == StartDate.ToString("yyyyMM"))
+            {
+                effectiveStart = StartDate;
+                effectiveEnd = currentBudget.LastDay();
+            }
+            else if (currentBudget.YearMonth == EndDate.ToString("yyyyMM"))
+            {
+                effectiveStart = currentBudget.FirstDay();
+                effectiveEnd = EndDate;
+            }
+            else
+            {
+                effectiveStart = currentBudget.FirstDay();
+                effectiveEnd = currentBudget.LastDay();
+            }
+
+            var effectiveDayCount = Period.DayCount(effectiveStart, effectiveEnd);
+            return effectiveDayCount;
+        }
     }
 }
