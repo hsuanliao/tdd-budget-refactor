@@ -50,19 +50,15 @@ namespace BudgetApp
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
 
-                //string currentMonth = "";
                 while (allEndMonth > allStartMonth)
                 {
-                    //currentMonth = allStartMonth.ToString("yyyyMM");
                     var currentBudget = FindBudget(allStartMonth, budgets);
-                    //var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentMonth);
 
-                    var currentBudgetAmount = currentBudget == null
-                        ? 0
-                        : currentBudget.DailyAmount() *
-                        EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
-
-                    totalAmount += currentBudgetAmount;
+                    if (currentBudget != null)
+                    {
+                        totalAmount += currentBudget.DailyAmount() *
+                            EffectiveDayCount(currentBudget.FirstDay(), currentBudget.LastDay());
+                    }
 
                     allStartMonth = allStartMonth.AddMonths(1);
                 }
