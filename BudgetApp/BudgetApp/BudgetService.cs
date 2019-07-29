@@ -22,9 +22,7 @@ namespace BudgetApp
 
             if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
             {
-                var searchMonth = startDate.ToString("yyyyMM");
-
-                var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
+                var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
                 if (budget == null)
                 {
                     return 0;
