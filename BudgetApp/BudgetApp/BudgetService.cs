@@ -43,12 +43,12 @@ namespace BudgetApp
                     {
                         DateTime effectiveStartDate;
                         DateTime effectiveEndDate;
-                        if (IsSameMonth(currentDate, startDate))
+                        if (currentDate.ToString("yyyyMM") == startDate.ToString("yyyyMM"))
                         {
                             effectiveStartDate = startDate;
                             effectiveEndDate = currentBudget.LastDay();
                         }
-                        else if (IsSameMonth(currentDate, endDate))
+                        else if (currentDate.ToString("yyyyMM") == endDate.ToString("yyyyMM"))
                         {
                             effectiveStartDate = currentBudget.FirstDay();
                             effectiveEndDate = endDate;
