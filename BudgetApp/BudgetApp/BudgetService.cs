@@ -38,9 +38,9 @@ namespace BudgetApp
                 var loopEndDate = new DateTime(endDate.Year, endDate.Month, 1).AddMonths(1);
                 while (currentDate < loopEndDate)
                 {
+                    var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (currentBudget != null)
                         {
                             totalAmount += currentBudget.DailyAmount() * EffectiveDays(startDate, currentBudget.LastDay());
@@ -48,7 +48,6 @@ namespace BudgetApp
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (currentBudget != null)
                         {
                             totalAmount += currentBudget.DailyAmount() * EffectiveDays(currentBudget.FirstDay(), endDate);
@@ -56,7 +55,6 @@ namespace BudgetApp
                     }
                     else
                     {
-                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (currentBudget != null)
                         {
                             totalAmount += currentBudget.DailyAmount() * EffectiveDays(currentBudget.FirstDay(), currentBudget.LastDay());
