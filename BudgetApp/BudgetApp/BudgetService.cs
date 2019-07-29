@@ -28,8 +28,7 @@ namespace BudgetApp
                     return 0;
                 }
 
-                var daysInMonth = budget.Days();
-                return budget.Amount / daysInMonth * (endDate.Day - startDate.Day + 1);
+                return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
             }
             else
             {
