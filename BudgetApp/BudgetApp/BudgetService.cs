@@ -40,26 +40,26 @@ namespace BudgetApp
                 {
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
-                        if (firstMonthBudget != null)
+                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
+                        if (currentBudget != null)
                         {
-                            totalAmount += firstMonthBudget.DailyAmount() * EffectiveDays(startDate, firstMonthBudget.LastDay());
+                            totalAmount += currentBudget.DailyAmount() * EffectiveDays(startDate, currentBudget.LastDay());
                         }
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
-                        if (lastMonthBudget != null)
+                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
+                        if (currentBudget != null)
                         {
-                            totalAmount += lastMonthBudget.DailyAmount() * EffectiveDays(lastMonthBudget.FirstDay(), endDate);
+                            totalAmount += currentBudget.DailyAmount() * EffectiveDays(currentBudget.FirstDay(), endDate);
                         }
                     }
                     else
                     {
-                        var middleBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
-                        if (middleBudget != null)
+                        var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
+                        if (currentBudget != null)
                         {
-                            totalAmount += middleBudget.DailyAmount() * EffectiveDays(middleBudget.FirstDay(), middleBudget.LastDay());
+                            totalAmount += currentBudget.DailyAmount() * EffectiveDays(currentBudget.FirstDay(), currentBudget.LastDay());
                         }
                     }
 
