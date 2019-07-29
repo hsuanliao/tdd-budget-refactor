@@ -40,7 +40,7 @@ namespace BudgetApp
                 {
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var firstMonth = startDate.ToString("yyyyMM");
+                        var firstMonth = currentDate.ToString("yyyyMM");
                         var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
                         if (firstMonthBudget != null)
                         {
@@ -49,7 +49,7 @@ namespace BudgetApp
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var lastMonth = endDate.ToString("yyyyMM");
+                        var lastMonth = currentDate.ToString("yyyyMM");
                         var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == lastMonth);
                         if (lastMonthBudget != null)
                         {
