@@ -51,8 +51,11 @@ namespace BudgetApp
                 while (allEndMonth > allStartMonth)
                 {
                     var searchMonth = allStartMonth.ToString("yyyyMM");
-                    if (budgets.Any(x => x.YearMonth == searchMonth))
-                        totalAmount += budgets.FirstOrDefault(x => x.YearMonth == searchMonth).Amount;
+                    var middleBudget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
+                    if (middleBudget != null)
+                    {
+                        totalAmount += middleBudget.Amount;
+                    }
 
                     allStartMonth = allStartMonth.AddMonths(1);
                 }
