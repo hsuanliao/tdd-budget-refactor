@@ -36,7 +36,7 @@ namespace BudgetApp
                 int firstMonthAmount = 0;
                 if (firstMonthBudget != null)
                 {
-                    firstMonthAmount = firstMonthBudget.DailyAmount() * (firstMonthBudget.Days() - startDate.Day + 1);
+                    firstMonthAmount = firstMonthBudget.DailyAmount() * ((firstMonthBudget.LastDay() - startDate).Days + 1);
                 }
 
                 var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM"));
