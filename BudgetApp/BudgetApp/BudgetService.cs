@@ -28,7 +28,7 @@ namespace BudgetApp
                     return 0;
                 }
 
-                return budget.DailyAmount() * EffectiveDays(startDate, endDate);
+                return budget.DailyAmount() * DayCount(startDate, endDate);
             }
             else
             {
@@ -58,7 +58,7 @@ namespace BudgetApp
                             effectiveStartDate = currentBudget.FirstDay();
                             effectiveEndDate = currentBudget.LastDay();
                         }
-                        totalAmount += currentBudget.DailyAmount() * EffectiveDays(effectiveStartDate, effectiveEndDate);
+                        totalAmount += currentBudget.DailyAmount() * DayCount(effectiveStartDate, effectiveEndDate);
                     }
 
                     currentDate = currentDate.AddMonths(1);
@@ -68,7 +68,7 @@ namespace BudgetApp
             }
         }
 
-        private static int EffectiveDays(DateTime startDate, DateTime endDate)
+        private static int DayCount(DateTime startDate, DateTime endDate)
         {
             return (endDate - startDate).Days + 1;
         }
