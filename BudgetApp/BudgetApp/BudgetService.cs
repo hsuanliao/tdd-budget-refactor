@@ -23,12 +23,12 @@ namespace BudgetApp
             if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
             {
                 var searchMonth = startDate.ToString("yyyyMM");
-                if (budgets.All(x => x.YearMonth != searchMonth))
+
+                var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
+                if (budget == null)
                 {
                     return 0;
                 }
-
-                var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
 
                 return budget.Amount / DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
             }
