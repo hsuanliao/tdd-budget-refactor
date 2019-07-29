@@ -54,7 +54,7 @@ namespace BudgetApp
                     var middleBudget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
                     if (middleBudget != null)
                     {
-                        totalAmount += middleBudget.Amount;
+                        totalAmount += middleBudget.DailyAmount() * EffectiveDays(middleBudget.FirstDay(), middleBudget.LastDay());
                     }
 
                     allStartMonth = allStartMonth.AddMonths(1);
