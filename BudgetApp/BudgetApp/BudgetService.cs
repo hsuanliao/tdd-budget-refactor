@@ -40,8 +40,7 @@ namespace BudgetApp
                 {
                     if (IsSameMonth(currentDate, startDate))
                     {
-                        var firstMonth = currentDate.ToString("yyyyMM");
-                        var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
+                        var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (firstMonthBudget != null)
                         {
                             totalAmount += firstMonthBudget.DailyAmount() * EffectiveDays(startDate, firstMonthBudget.LastDay());
@@ -49,8 +48,7 @@ namespace BudgetApp
                     }
                     else if (IsSameMonth(currentDate, endDate))
                     {
-                        var lastMonth = currentDate.ToString("yyyyMM");
-                        var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == lastMonth);
+                        var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (lastMonthBudget != null)
                         {
                             totalAmount += lastMonthBudget.DailyAmount() * EffectiveDays(lastMonthBudget.FirstDay(), endDate);
@@ -58,8 +56,7 @@ namespace BudgetApp
                     }
                     else
                     {
-                        var searchMonth = currentDate.ToString("yyyyMM");
-                        var middleBudget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
+                        var middleBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                         if (middleBudget != null)
                         {
                             totalAmount += middleBudget.DailyAmount() * EffectiveDays(middleBudget.FirstDay(), middleBudget.LastDay());
