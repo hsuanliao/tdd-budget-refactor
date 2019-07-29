@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BudgetApp
 {
@@ -49,13 +46,23 @@ namespace BudgetApp
             }
             else
             {
-                var firstmonth = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM")).Amount /
-                    DateTime.DaysInMonth(startDate.Year, startDate.Month) *
-                    (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
-                var secondmonth = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM")).Amount /
-                    DateTime.DaysInMonth(endDate.Year, endDate.Month) * (endDate.Day);
+                var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
+                int firstMonthAmount = 0;
+                if (firstMonthBudget != null)
+                {
+                    firstMonthAmount = firstMonthBudget.Amount /
+                                 DateTime.DaysInMonth(startDate.Year, startDate.Month) *
+                                 (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day + 1);
+                }
 
-                var totalAmount = firstmonth + secondmonth;
+                var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == endDate.ToString("yyyyMM"));
+                int lastMonthAmount = 0;
+                if (lastMonthBudget != null)
+                {
+                    lastMonthAmount = lastMonthBudget.Amount /
+                                  DateTime.DaysInMonth(endDate.Year, endDate.Month) * (endDate.Day);
+                }
+                var totalAmount = firstMonthAmount + lastMonthAmount;
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
                 while (allEndMonth > allStartMonth)
