@@ -12,7 +12,7 @@ namespace BudgetApp
             return DateTime.DaysInMonth(FirstDay().Year, FirstDay().Month);
         }
 
-        private DateTime FirstDay()
+        public DateTime FirstDay()
         {
             return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
         }
