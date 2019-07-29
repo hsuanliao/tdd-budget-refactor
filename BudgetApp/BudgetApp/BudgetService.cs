@@ -28,7 +28,7 @@ namespace BudgetApp
                     return 0;
                 }
 
-                return budget.DailyAmount() * (endDate.Day - startDate.Day + 1);
+                return budget.DailyAmount() * EffectiveDays(startDate, endDate);
             }
             else
             {
