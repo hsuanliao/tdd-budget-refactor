@@ -29,20 +29,8 @@ namespace BudgetApp
                 }
 
                 var budget = budgets.FirstOrDefault(x => x.YearMonth == searchMonth);
-                if (endDate.Day == DateTime.DaysInMonth(startDate.Year, startDate.Month) && startDate.Day == 1)
-                {
-                    return budget.Amount;
-                }
-                else if (startDate.Day == endDate.Day)
-                {
-                    return budget.Amount /
-                        DateTime.DaysInMonth(startDate.Year, startDate.Month);
-                }
-                else
-                {
-                    return budget.Amount /
-                        DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
-                }
+
+                return budget.Amount / DateTime.DaysInMonth(startDate.Year, startDate.Month) * (endDate.Day - startDate.Day + 1);
             }
             else
             {
