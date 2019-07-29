@@ -32,22 +32,21 @@ namespace BudgetApp
             }
             else
             {
+                int totalAmount = 0;
                 var firstMonth = startDate.ToString("yyyyMM");
                 var firstMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == firstMonth);
-                int firstMonthAmount = 0;
                 if (firstMonthBudget != null)
                 {
-                    firstMonthAmount = firstMonthBudget.DailyAmount() * EffectiveDays(startDate, firstMonthBudget.LastDay());
+                    totalAmount += firstMonthBudget.DailyAmount() * EffectiveDays(startDate, firstMonthBudget.LastDay());
                 }
 
                 var lastMonth = endDate.ToString("yyyyMM");
                 var lastMonthBudget = budgets.FirstOrDefault(x => x.YearMonth == lastMonth);
-                int lastMonthAmount = 0;
                 if (lastMonthBudget != null)
                 {
-                    lastMonthAmount = lastMonthBudget.DailyAmount() * EffectiveDays(lastMonthBudget.FirstDay(), endDate);
+                    totalAmount += lastMonthBudget.DailyAmount() * EffectiveDays(lastMonthBudget.FirstDay(), endDate);
                 }
-                var totalAmount = firstMonthAmount + lastMonthAmount;
+
                 var allStartMonth = new DateTime(startDate.Year, startDate.Month, 1).AddMonths(1);
                 var allEndMonth = new DateTime(endDate.Year, endDate.Month, 1);
                 while (allEndMonth > allStartMonth)
