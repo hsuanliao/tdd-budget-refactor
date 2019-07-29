@@ -20,7 +20,7 @@ namespace BudgetApp
                 return 0;
             }
 
-            if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
+            if (IsSameMonth(startDate, endDate))
             {
                 var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
                 if (budget == null)
@@ -62,6 +62,11 @@ namespace BudgetApp
 
                 return totalAmount;
             }
+        }
+
+        private static bool IsSameMonth(DateTime startDate, DateTime endDate)
+        {
+            return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
         }
     }
 }
