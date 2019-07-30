@@ -41,7 +41,7 @@ namespace BudgetApp
                     var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                     if (currentBudget != null)
                     {
-                        var effectiveDayCount = OverlappingDayCount(startDate, endDate, currentBudget);
+                        var effectiveDayCount = OverlappingDayCount(new Period(startDate, endDate), currentBudget);
                         totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
 
@@ -52,19 +52,19 @@ namespace BudgetApp
             }
         }
 
-        private static int OverlappingDayCount(DateTime startDate, DateTime endDate, Budget currentBudget)
+        private static int OverlappingDayCount(Period period, Budget currentBudget)
         {
             DateTime effectiveStartDate;
             DateTime effectiveEndDate;
-            if (currentBudget.YearMonth == startDate.ToString("yyyyMM"))
+            if (currentBudget.YearMonth == period.StartDate.ToString("yyyyMM"))
             {
-                effectiveStartDate = startDate;
+                effectiveStartDate = period.StartDate;
                 effectiveEndDate = currentBudget.LastDay();
             }
-            else if (currentBudget.YearMonth == endDate.ToString("yyyyMM"))
+            else if (currentBudget.YearMonth == period.EndDate.ToString("yyyyMM"))
             {
                 effectiveStartDate = currentBudget.FirstDay();
-                effectiveEndDate = endDate;
+                effectiveEndDate = period.EndDate;
             }
             else
             {
