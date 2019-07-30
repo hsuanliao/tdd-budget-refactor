@@ -28,7 +28,7 @@ namespace BudgetApp
                     return 0;
                 }
 
-                return budget.DailyAmount() * DayCount(startDate, endDate);
+                return budget.DailyAmount() * Period.DayCount(startDate, endDate);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace BudgetApp
                     var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
                     if (currentBudget != null)
                     {
-                        var effectiveDayCount = OverlappingDayCount(new Period(startDate, endDate), currentBudget);
+                        var effectiveDayCount = new Period(startDate, endDate).OverlappingDayCount(currentBudget);
                         totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
                     }
 
@@ -50,35 +50,6 @@ namespace BudgetApp
 
                 return totalAmount;
             }
-        }
-
-        private static int OverlappingDayCount(Period period, Budget currentBudget)
-        {
-            DateTime effectiveStartDate;
-            DateTime effectiveEndDate;
-            if (currentBudget.YearMonth == period.StartDate.ToString("yyyyMM"))
-            {
-                effectiveStartDate = period.StartDate;
-                effectiveEndDate = currentBudget.LastDay();
-            }
-            else if (currentBudget.YearMonth == period.EndDate.ToString("yyyyMM"))
-            {
-                effectiveStartDate = currentBudget.FirstDay();
-                effectiveEndDate = period.EndDate;
-            }
-            else
-            {
-                effectiveStartDate = currentBudget.FirstDay();
-                effectiveEndDate = currentBudget.LastDay();
-            }
-
-            var effectiveDayCount = DayCount(effectiveStartDate, effectiveEndDate);
-            return effectiveDayCount;
-        }
-
-        private static int DayCount(DateTime startDate, DateTime endDate)
-        {
-            return (endDate - startDate).Days + 1;
         }
 
         private static bool IsSameMonth(DateTime startDate, DateTime endDate)
