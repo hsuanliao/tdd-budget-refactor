@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BudgetApp
 {
@@ -19,14 +20,8 @@ namespace BudgetApp
                 return 0;
             }
 
-            var totalAmount = 0;
             var period = new Period(startDate, endDate);
-            foreach (var currentBudget in budgets)
-            {
-                totalAmount += currentBudget.OverlappingAmount(period);
-            }
-
-            return totalAmount;
+            return budgets.Sum(b => b.OverlappingAmount(period));
         }
     }
 }
