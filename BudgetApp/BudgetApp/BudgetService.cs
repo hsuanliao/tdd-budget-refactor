@@ -39,10 +39,10 @@ namespace BudgetApp
                 while (currentDate < loopEndDate)
                 {
                     var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
+                    var period = new Period(startDate, endDate);
                     if (currentBudget != null)
                     {
-                        var effectiveDayCount = new Period(startDate, endDate).OverlappingDayCount(currentBudget);
-                        totalAmount += currentBudget.DailyAmount() * effectiveDayCount;
+                        totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
                     }
 
                     currentDate = currentDate.AddMonths(1);
