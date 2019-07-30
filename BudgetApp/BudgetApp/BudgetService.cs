@@ -14,14 +14,13 @@ namespace BudgetApp
 
         public decimal Query(DateTime startDate, DateTime endDate)
         {
-            var budgets = this._repo.GetAll();
             if (startDate > endDate)
             {
                 return 0;
             }
 
             var period = new Period(startDate, endDate);
-            return budgets.Sum(b => b.OverlappingAmount(period));
+            return _repo.GetAll().Sum(b => b.OverlappingAmount(period));
         }
     }
 }
