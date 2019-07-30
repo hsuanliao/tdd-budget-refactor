@@ -15,27 +15,15 @@ namespace BudgetApp
 
         public int OverlappingDayCount(Budget currentBudget)
         {
-            DateTime effectiveEndDate;
-
             var effectiveStartDate = StartDate > currentBudget.FirstDay()
                 ? StartDate
                 : currentBudget.FirstDay();
 
-            if (currentBudget.YearMonth == StartDate.ToString("yyyyMM"))
-            {
-                effectiveEndDate = currentBudget.LastDay();
-            }
-            else if (currentBudget.YearMonth == EndDate.ToString("yyyyMM"))
-            {
-                effectiveEndDate = EndDate;
-            }
-            else
-            {
-                effectiveEndDate = currentBudget.LastDay();
-            }
+            var effectiveEndDate = EndDate < currentBudget.LastDay()
+                ? EndDate
+                : currentBudget.LastDay();
 
-            var effectiveDayCount = DayCount(effectiveStartDate, effectiveEndDate);
-            return effectiveDayCount;
+            return DayCount(effectiveStartDate, effectiveEndDate);
         }
 
         public static int DayCount(DateTime startDate, DateTime endDate)
