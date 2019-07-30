@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace BudgetApp
 {
@@ -20,20 +19,11 @@ namespace BudgetApp
                 return 0;
             }
 
-            int totalAmount = 0;
-
-            var currentDate = startDate;
-            var loopEndDate = new DateTime(endDate.Year, endDate.Month, 1).AddMonths(1);
-            while (currentDate < loopEndDate)
+            var totalAmount = 0;
+            var period = new Period(startDate, endDate);
+            foreach (var currentBudget in budgets)
             {
-                var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
-                var period = new Period(startDate, endDate);
-                if (currentBudget != null)
-                {
-                    totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
-                }
-
-                currentDate = currentDate.AddMonths(1);
+                totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
             }
 
             return totalAmount;
