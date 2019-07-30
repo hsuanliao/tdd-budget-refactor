@@ -4,37 +4,37 @@ namespace BudgetApp
 {
     public class Budget
     {
-        public string YearMonth { get; set; }
         public int Amount { get; set; }
-
-        public int Days()
-        {
-            return DateTime.DaysInMonth(FirstDay().Year, FirstDay().Month);
-        }
-
-        public DateTime FirstDay()
-        {
-            return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
-        }
-
-        public int DailyAmount()
-        {
-            return Amount / Days();
-        }
-
-        public DateTime LastDay()
-        {
-            return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
-        }
-
-        public Period GetPeriod()
-        {
-            return new Period(FirstDay(), LastDay());
-        }
+        public string YearMonth { get; set; }
 
         public int OverlappingAmount(Period period)
         {
             return DailyAmount() * period.OverlappingDayCount(GetPeriod());
+        }
+
+        private int DailyAmount()
+        {
+            return Amount / Days();
+        }
+
+        private int Days()
+        {
+            return DateTime.DaysInMonth(FirstDay().Year, FirstDay().Month);
+        }
+
+        private DateTime FirstDay()
+        {
+            return DateTime.ParseExact(YearMonth + "01", "yyyyMMdd", null);
+        }
+
+        private Period GetPeriod()
+        {
+            return new Period(FirstDay(), LastDay());
+        }
+
+        private DateTime LastDay()
+        {
+            return DateTime.ParseExact(YearMonth + Days(), "yyyyMMdd", null);
         }
     }
 }
