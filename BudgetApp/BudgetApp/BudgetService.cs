@@ -20,41 +20,23 @@ namespace BudgetApp
                 return 0;
             }
 
-            if (IsSameMonth(startDate, endDate))
+            int totalAmount = 0;
+
+            var currentDate = startDate;
+            var loopEndDate = new DateTime(endDate.Year, endDate.Month, 1).AddMonths(1);
+            while (currentDate < loopEndDate)
             {
-                var budget = budgets.FirstOrDefault(x => x.YearMonth == startDate.ToString("yyyyMM"));
-                if (budget == null)
+                var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
+                var period = new Period(startDate, endDate);
+                if (currentBudget != null)
                 {
-                    return 0;
+                    totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
                 }
 
-                return budget.DailyAmount() * Period.DayCount(startDate, endDate);
+                currentDate = currentDate.AddMonths(1);
             }
-            else
-            {
-                int totalAmount = 0;
 
-                var currentDate = startDate;
-                var loopEndDate = new DateTime(endDate.Year, endDate.Month, 1).AddMonths(1);
-                while (currentDate < loopEndDate)
-                {
-                    var currentBudget = budgets.FirstOrDefault(x => x.YearMonth == currentDate.ToString("yyyyMM"));
-                    var period = new Period(startDate, endDate);
-                    if (currentBudget != null)
-                    {
-                        totalAmount += currentBudget.DailyAmount() * period.OverlappingDayCount(currentBudget);
-                    }
-
-                    currentDate = currentDate.AddMonths(1);
-                }
-
-                return totalAmount;
-            }
-        }
-
-        private static bool IsSameMonth(DateTime startDate, DateTime endDate)
-        {
-            return startDate.ToString("yyyyMM") == endDate.ToString("yyyyMM");
+            return totalAmount;
         }
     }
 }
